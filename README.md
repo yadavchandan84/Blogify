@@ -121,8 +121,9 @@ blog-app/
 │   └── index.js                # Server entry point and DB connection
 └── package.json                # Project dependencies and scripts
 
----
 ```
+---
+
 
 ## 🔧 Getting Started
 
@@ -130,13 +131,13 @@ blog-app/
 Run this in both your `client` and backend root directories.
 ```bash
 npm install
-
+```
 ### 2. Run the development servers
 
 **Backend:**
 ```bash
 npm run dev
-
+```
 **Frontend:**
 ```bash
 cd client
