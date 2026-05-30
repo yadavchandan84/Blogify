@@ -122,6 +122,7 @@ blog-app/
 └── package.json                # Project dependencies and scripts
 
 ---
+```
 
 ## 🔧 Getting Started
 
