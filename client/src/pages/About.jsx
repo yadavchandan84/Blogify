@@ -10,8 +10,8 @@ export default function About() {
           </h1>
           <div className='text-md text-gray-500 flex flex-col gap-6'>
             <p>
-              Welcome to Blogify! This blog was created by Ramnath as a personal
-              project to share his thoughts and ideas with the world. Ramnath is
+              Welcome to Blogify! This blog was created by Chandan as a personal
+              project to share his thoughts and ideas with the world. Chandan is
               a passionate developer who loves to write about technology,
               coding, and everything in between.
             </p>
@@ -19,7 +19,7 @@ export default function About() {
             <p>
               On this blog, you'll find weekly articles and tutorials on topics
               such as web development, software engineering, and programming
-              languages. Ramnath is always learning and exploring new
+              languages. Chandan is always learning and exploring new
               technologies, so be sure to check back often for new content!
             </p>
 
