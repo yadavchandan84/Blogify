@@ -121,7 +121,9 @@ blog-app/
 │   └── index.js                # Server entry point and DB connection
 └── package.json                # Project dependencies and scripts
 
+```
 ---
+
 
 ## 🔧 Getting Started
 
@@ -129,13 +131,13 @@ blog-app/
 Run this in both your `client` and backend root directories.
 ```bash
 npm install
-
+```
 ### 2. Run the development servers
 
 **Backend:**
 ```bash
 npm run dev
-
+```
 **Frontend:**
 ```bash
 cd client
@@ -186,4 +188,4 @@ Contributions are welcome. Please fork the repository and open a pull request. F
 ---
 
 ## 📧 Contact
-For support or inquiries, please open an issue or email: [ramnath2544@gmail.com](mailto:ramnath2544@gmail.com).
+For support or inquiries, please open an issue or email: [yadavchandan6103@gmail.com](mailto:yadavchandan6103@gmail.com).
