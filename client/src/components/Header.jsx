@@ -14,6 +14,7 @@ import {
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FaMoon, FaSun } from 'react-icons/fa';
+import { HiOutlinePencilAlt } from 'react-icons/hi';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleTheme } from '../redux/theme/themeSlice';
 import { avatarUrl } from '../constants/defaultAvatarUrl';
@@ -62,42 +63,54 @@ export default function Header() {
   };
 
   return (
-    <Navbar className='border-b-2'>
+    <Navbar className='sticky top-0 z-50 border-b border-gray-200/70 bg-white/70 px-4 py-3 backdrop-blur-xl dark:border-gray-700/60 dark:bg-[rgb(16,23,42)]/70'>
       <Link
         to='/'
-        className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white'
+        className='flex items-center gap-2 self-center whitespace-nowrap text-lg font-bold sm:text-xl'
       >
-        <span className='px-2 py-1 bg-gradient-to-r from-red-500 to-yellow-300 rounded-lg text-white'>
+        <span className='brand-gradient animated-gradient flex h-9 w-9 items-center justify-center rounded-xl text-white shadow-lg shadow-indigo-500/30'>
+          <HiOutlinePencilAlt className='h-5 w-5' />
+        </span>
+        <span className='brand-text animated-gradient font-extrabold tracking-tight'>
           Blogify
         </span>
       </Link>
+
       <form onSubmit={handleSubmit}>
         <TextInput
           type='text'
-          placeholder='Search...'
+          placeholder='Search articles...'
           rightIcon={AiOutlineSearch}
           className='hidden lg:inline'
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </form>
-      <Button className='w-12 h-10 lg:hidden' color='gray' pill>
+
+      <Button
+        className='h-10 w-12 lg:hidden'
+        color='gray'
+        pill
+        onClick={() => navigate('/search')}
+      >
         <AiOutlineSearch />
       </Button>
-      <div className='flex gap-2 md:order-2'>
+
+      <div className='flex items-center gap-2 md:order-2'>
         <button
           onClick={() => dispatch(toggleTheme())}
-          className={`cursor-pointer w-10 h-10 hidden sm:flex items-center justify-center rounded-full transition-all duration-500 
+          aria-label='Toggle theme'
+          className={`hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full transition-all duration-500 sm:flex
     ${
       theme === 'light'
-        ? 'bg-gradient-to-br from-amber-300 to-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.8)] hover:shadow-[0_0_20px_rgba(251,146,60,1)] hover:scale-110'
-        : 'bg-gradient-to-br from-indigo-500 to-violet-600 shadow-[0_0_12px_rgba(139,92,246,0.8)] hover:shadow-[0_0_20px_rgba(139,92,246,1)] hover:scale-110'
+        ? 'bg-gradient-to-br from-amber-300 to-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.8)] hover:scale-110 hover:shadow-[0_0_20px_rgba(251,146,60,1)]'
+        : 'bg-gradient-to-br from-indigo-500 to-violet-600 shadow-[0_0_12px_rgba(139,92,246,0.8)] hover:scale-110 hover:shadow-[0_0_20px_rgba(139,92,246,1)]'
     }`}
         >
           {theme === 'light' ? (
-            <FaSun className='text-white text-lg drop-shadow-[0_0_4px_rgba(255,255,255,0.9)] animate-spin-slow' />
+            <FaSun className='animate-spin-slow text-lg text-white drop-shadow-[0_0_4px_rgba(255,255,255,0.9)]' />
           ) : (
-            <FaMoon className='text-white text-lg drop-shadow-[0_0_4px_rgba(255,255,255,0.9)] animate-moon-pulse' />
+            <FaMoon className='animate-moon-pulse text-lg text-white drop-shadow-[0_0_4px_rgba(255,255,255,0.9)]' />
           )}
         </button>
 
@@ -107,8 +120,8 @@ export default function Header() {
             inline
             label={
               <Avatar
-                className='cursor-pointer'
-                alt='user'
+                className='cursor-pointer ring-2 ring-indigo-500/40 rounded-full'
+                alt={currentUser.username}
                 img={avatarUrl(currentUser.profilePicture)}
                 rounded
               />
@@ -116,7 +129,7 @@ export default function Header() {
           >
             <DropdownHeader>
               <span className='block text-sm'>@{currentUser.username}</span>
-              <span className='block text-sm font-medium truncate'>
+              <span className='block truncate text-sm font-medium'>
                 {currentUser.email}
               </span>
             </DropdownHeader>
@@ -128,18 +141,15 @@ export default function Header() {
           </Dropdown>
         ) : (
           <Link to='/sign-in'>
-            <Button
-              className='cursor-pointer'
-              gradientduotone='purpleToBlue'
-              outline
-            >
+            <button className='brand-gradient animated-gradient btn-3d cursor-pointer rounded-lg px-5 py-2 text-sm font-semibold text-white'>
               Sign In
-            </Button>
+            </button>
           </Link>
         )}
 
         <NavbarToggle className='cursor-pointer' />
       </div>
+
       <NavbarCollapse>
         <NavbarLink as={Link} to='/' active={path === '/'}>
           Home

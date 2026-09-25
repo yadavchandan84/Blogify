@@ -11,22 +11,48 @@ import uploadRoutes from './routes/upload.route.js';
 
 dotenv.config();
 
+// Fail fast instead of buffering queries for ~100s when the DB is unreachable.
+mongoose.set('bufferTimeoutMS', 5000);
+
 mongoose
-  .connect(process.env.MONGO)
+  .connect(process.env.MONGO, {
+    serverSelectionTimeoutMS: 8000,
+  })
   .then(() => {
-    console.log('MongoDb is connected');
+    console.log('✅ MongoDB is connected');
   })
   .catch((err) => {
-    console.log(err);
+    console.error('❌ MongoDB connection error:', err.message);
+    console.error(
+      'Tip: If this mentions IP whitelisting, add your current IP in MongoDB Atlas → Network Access.',
+    );
   });
+
+mongoose.connection.on('disconnected', () => {
+  console.warn('⚠️  MongoDB disconnected');
+});
 
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
 
+// Reject API requests quickly with a clear message when the DB is down,
+// instead of letting queries hang until they time out.
+app.use('/api', (req, res, next) => {
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({
+      success: false,
+      statusCode: 503,
+      message:
+        'Database is not connected. Please try again shortly. (Check MongoDB Atlas IP whitelist if this persists.)',
+    });
+  }
+  next();
+});
+
 app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+  console.log('🚀 Server is running on port 3000');
 });
 
 app.use('/api/user', userRoutes);

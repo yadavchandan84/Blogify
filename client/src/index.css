@@ -5,6 +5,14 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+/* ---------- Brand palette ---------- */
+:root {
+  --brand-1: #6366f1; /* indigo-500 */
+  --brand-2: #8b5cf6; /* violet-500 */
+  --brand-3: #d946ef; /* fuchsia-500 */
+}
+
+/* ---------- Animations ---------- */
 @keyframes spin-slow {
   0%   { transform: rotate(0deg) scale(1); }
   50%  { transform: rotate(180deg) scale(1.25); }
@@ -16,48 +24,148 @@
   50%       { transform: scale(1.2) rotate(10deg);  opacity: 0.8; }
 }
 
-.animate-spin-slow {
-  animation: spin-slow 5s linear infinite;
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50%      { transform: translateY(-24px) translateX(12px); }
 }
 
-.animate-moon-pulse {
-  animation: moon-pulse 2.5s ease-in-out infinite;
+@keyframes gradient-pan {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-body {
-  height: 100vh;
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.ql-editor {
-  font-size: 1.05rem;
+@keyframes float-3d {
+  0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+  50%      { transform: translateY(-14px) rotateX(6deg) rotateY(-6deg); }
 }
 
-.post-content p {
-  margin-bottom: 0.5rem;
+.animate-spin-slow { animation: spin-slow 5s linear infinite; }
+.animate-moon-pulse { animation: moon-pulse 2.5s ease-in-out infinite; }
+.animate-float-slow { animation: float-slow 9s ease-in-out infinite; }
+.animate-fade-up { animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-float-3d { animation: float-3d 7s ease-in-out infinite; }
+
+/* ---------- 3D system ---------- */
+.perspective { perspective: 1400px; }
+.perspective-near { perspective: 900px; }
+.preserve-3d { transform-style: preserve-3d; }
+
+/* Tilt card: lifts toward the viewer and rotates slightly on hover */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 }
+.card-3d:hover {
+  transform: translateY(-10px) rotateX(7deg) rotateY(-7deg) scale(1.02);
+  box-shadow:
+    0 30px 60px -15px rgba(79, 70, 229, 0.35),
+    0 12px 24px -8px rgba(217, 70, 239, 0.25);
+}
+.card-3d__layer { transform: translateZ(45px); }
+
+/* Glossy 3D button with depth and press feedback */
+.btn-3d {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  box-shadow:
+    0 10px 20px -6px rgba(79, 70, 229, 0.55),
+    0 4px 8px -2px rgba(217, 70, 239, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.btn-3d:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 16px 30px -8px rgba(79, 70, 229, 0.6),
+    0 6px 12px -3px rgba(217, 70, 239, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+.btn-3d:active { transform: translateY(1px) scale(0.99); }
+
+/* Soft neumorphic / layered depth surface */
+.surface-3d {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 20px 40px -20px rgba(30, 27, 75, 0.35),
+    0 8px 16px -8px rgba(30, 27, 75, 0.2);
+}
+.dark .surface-3d {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 20px 40px -20px rgba(0, 0, 0, 0.6),
+    0 8px 16px -8px rgba(0, 0, 0, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-3d, .btn-3d, .animate-float-3d, .animate-float-slow { transition: none; animation: none; }
+  .card-3d:hover { transform: none; }
+}
+
+/* ---------- Reusable brand helpers ---------- */
+.brand-gradient {
+  background-image: linear-gradient(120deg, var(--brand-1), var(--brand-2), var(--brand-3));
+}
+
+.brand-text {
+  background-image: linear-gradient(120deg, var(--brand-1), var(--brand-2), var(--brand-3));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.animated-gradient {
+  background-size: 200% 200%;
+  animation: gradient-pan 8s ease infinite;
+}
+
+html { scroll-behavior: smooth; }
+
+body { min-height: 100vh; }
+
+/* ---------- Rich text (post content) ---------- */
+.ql-editor { font-size: 1.05rem; }
+
+.post-content { line-height: 1.85; }
+
+.post-content p { margin-bottom: 1rem; }
 
 .post-content h1 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  font-family: sans-serif;
-  margin: 1.5rem 0;
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin: 1.75rem 0 1rem;
+  line-height: 1.25;
 }
 
 .post-content h2 {
-  font-size: 1.4rem;
-  font-family: sans-serif;
-  margin: 1.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.75rem;
+}
+
+.post-content img { border-radius: 0.75rem; margin: 1.25rem 0; }
+
+.post-content blockquote {
+  border-left: 4px solid var(--brand-2);
+  padding-left: 1rem;
+  font-style: italic;
+  color: #6b7280;
+  margin: 1.25rem 0;
 }
 
 .post-content a {
-  color: rgb(73, 149, 199);
+  color: var(--brand-1);
   text-decoration: none;
+  font-weight: 500;
 }
 
-.post-content a:hover {
-  text-decoration: underline;
-}
+.post-content a:hover { text-decoration: underline; }
 
-.dark .post-content a {
-  color: red;
-}
+.dark .post-content a { color: #a78bfa; }
