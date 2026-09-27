@@ -187,5 +187,15 @@ Contributions are welcome. Please fork the repository and open a pull request. F
 
 ---
 
-## 📧 Contact
-For support or inquiries, please open an issue or email: [yadavchandan6103@gmail.com](mailto:yadavchandan6103@gmail.com).
+## 👤 Author
+
+**Chandan Yadav**
+
+📧 [yadavchandan6103@gmail.com](mailto:yadavchandan6103@gmail.com)
+🔗 [GitHub](https://github.com/yadavchandan84) · [LinkedIn](https://www.linkedin.com/in/chandan-yadav-89aaa3253/)
+
+<div align="center">
+
+⭐ If you found this project useful, consider giving it a star.
+
+</div>
