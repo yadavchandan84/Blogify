@@ -4,5 +4,12 @@
       "source": "/api/:path*",
       "destination": "https://blogify-pgjy.onrender.com/api/:path*"
     }
+  ],
+  "routes": [
+    {
+      "src": "/[^.]+",
+      "dest": "/",
+      "status": 200
+    }
   ]
 }
